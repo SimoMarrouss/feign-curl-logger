@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,9 +21,9 @@ class FeignCurlLoggerTest {
         Request request = mock(Request.class);
         String url = "http://example.com";
         String method = "POST";
-        Map<String, Collection<String>> headers = Map.of(
-                "Content-Type", List.of("application/json"),
-                "Authorization", List.of("Bearer token"));
+        Map<String, Collection<String>> headers = new LinkedHashMap<>();
+        headers.put("Content-Type", List.of("application/json"));
+        headers.put("Authorization", List.of("Bearer token"));
         byte[] body = "{\"key\":\"value\"}".getBytes(StandardCharsets.UTF_8);
 
         when(request.httpMethod()).thenReturn(Request.HttpMethod.valueOf(method));
