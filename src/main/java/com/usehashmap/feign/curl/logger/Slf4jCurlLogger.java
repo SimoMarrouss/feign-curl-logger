@@ -12,15 +12,11 @@ public class Slf4jCurlLogger extends feign.Logger {
     private final Logger logger;
 
     public Slf4jCurlLogger() {
-        this(feign.Logger.class);
+        this(Slf4jCurlLogger.class);
     }
 
     public Slf4jCurlLogger(Class<?> clazz) {
         this(LoggerFactory.getLogger(clazz));
-    }
-
-    public Slf4jCurlLogger(String name) {
-        this(LoggerFactory.getLogger(name));
     }
 
     public Slf4jCurlLogger(Logger logger) {
@@ -41,8 +37,7 @@ public class Slf4jCurlLogger extends feign.Logger {
     protected Response logAndRebufferResponse(String configKey,
                                               feign.Logger.Level logLevel,
                                               Response response,
-                                              long elapsedTime)
-            throws IOException {
+                                              long elapsedTime) throws IOException {
         if (logger.isDebugEnabled()) {
             return super.logAndRebufferResponse(configKey, logLevel, response, elapsedTime);
         }
