@@ -1,12 +1,13 @@
 package com.usehashmap.feign.curl.logger;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import feign.Request;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,8 +23,8 @@ class FeignCurlLoggerTest {
         String url = "http://example.com";
         String method = "POST";
         Map<String, Collection<String>> headers = new LinkedHashMap<>();
-        headers.put("Content-Type", List.of("application/json"));
-        headers.put("Authorization", List.of("Bearer token"));
+        headers.put("Content-Type", ImmutableList.of("application/json"));
+        headers.put("Authorization", ImmutableList.of("Bearer token"));
         byte[] body = "{\"key\":\"value\"}".getBytes(StandardCharsets.UTF_8);
 
         when(request.httpMethod()).thenReturn(Request.HttpMethod.valueOf(method));
@@ -49,8 +50,8 @@ class FeignCurlLoggerTest {
         Request request = mock(Request.class);
         String url = "http://example.com";
         String method = "GET";
-        Map<String, Collection<String>> headers = Map.of(
-                "Accept", List.of("application/json"));
+        Map<String, Collection<String>> headers = ImmutableMap.of(
+                "Accept", ImmutableList.of("application/json"));
 
         when(request.httpMethod()).thenReturn(Request.HttpMethod.valueOf(method));
         when(request.url()).thenReturn(url);
@@ -76,7 +77,7 @@ class FeignCurlLoggerTest {
 
         when(request.httpMethod()).thenReturn(Request.HttpMethod.valueOf(method));
         when(request.url()).thenReturn(url);
-        when(request.headers()).thenReturn(Map.of());
+        when(request.headers()).thenReturn(ImmutableMap.of());
         when(request.body()).thenReturn(null);
 
         FeignCurlLogger feignCurlLogger = FeignCurlLogger.from(request);

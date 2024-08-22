@@ -1,5 +1,7 @@
 package com.usehashmap.feign.curl.logger.aspect;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import feign.Request;
 import feign.Response;
 import nl.altindag.log.LogCaptor;
@@ -13,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
@@ -44,7 +45,7 @@ class CurlLoggerAdviceTest {
         // Given
         when(response.request()).thenReturn(request);
         when(proceedingJoinPoint.getArgs()).thenReturn(new Object[]{"arg1", "arg2", response});
-        when(request.headers()).thenReturn(Map.of("header1", List.of("header1-value")));
+        when(request.headers()).thenReturn(ImmutableMap.of("header1", ImmutableList.of("header1-value")));
         when(request.url()).thenReturn("http://localhost");
         when(request.httpMethod()).thenReturn(Request.HttpMethod.GET);
         String curlCommand = "curl --request GET --location 'http://localhost' --header 'header1: header1-value' ";
