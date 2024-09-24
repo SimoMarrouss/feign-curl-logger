@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.usehashmap.feign.curl.logger.config.CurlLoggerAutoConfiguration
