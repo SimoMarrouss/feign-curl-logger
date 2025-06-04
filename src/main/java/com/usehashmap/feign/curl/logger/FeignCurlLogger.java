@@ -44,7 +44,12 @@ public class FeignCurlLogger {
                 .append("--location '").append(request.url()).append("' ");
 
         for (Map.Entry<String, Collection<String>> header : request.headers().entrySet()) {
-            curlLog.append("--header '").append(header.getKey()).append(": ").append(header.getValue().iterator().next()).append("' ");
+            String values = String.join(",", header.getValue());
+            curlLog.append("--header '")
+                    .append(header.getKey())
+                    .append(": ")
+                    .append(values)
+                    .append("' ");
         }
 
         if (request.body() != null) {
