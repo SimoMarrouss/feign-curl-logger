@@ -88,4 +88,28 @@ class FeignCurlLoggerTest {
         // Then
         assertThat(curlCommand).isEqualTo("curl --request DELETE --location 'http://example.com' ");
     }
+
+    @Test
+    void should_join_multiple_values_for_same_header() {
+        // Given
+        Request request = mock(Request.class);
+        String url = "http://example.com";
+        String method = "GET";
+        Map<String, Collection<String>> headers = ImmutableMap.of(
+                "Accept", ImmutableList.of("application/json", "text/plain"));
+
+        when(request.httpMethod()).thenReturn(Request.HttpMethod.valueOf(method));
+        when(request.url()).thenReturn(url);
+        when(request.headers()).thenReturn(headers);
+        when(request.body()).thenReturn(null);
+
+        FeignCurlLogger feignCurlLogger = FeignCurlLogger.from(request);
+
+        // When
+        String curlCommand = feignCurlLogger.get();
+
+        // Then
+        assertThat(curlCommand).isEqualTo("curl --request GET --location 'http://example.com' " +
+                "--header 'Accept: application/json,text/plain' ");
+    }
 }
